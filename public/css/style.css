@@ -1,0 +1,67 @@
+/* Globale Stiller */
+body {
+  /* Gerekirse varsayılan font ailesini buradan ayarlayabilirsiniz */
+}
+
+/* Dinamik olarak (JS ile) oluşturulan .productcard'ların 
+  Bootstrap grid sistemi (row) içinde düzgün görünmesi için.
+*/
+.product-list-container .productcard {
+  /* JS'de .productcard'a 'col' sınıfı eklenmediyse bu gereklidir */
+  flex-basis: 100%;
+  max-width: 100%;
+  padding: 0.5rem;
+}
+
+@media (min-width: 576px) {
+  .product-list-container .productcard {
+    flex-basis: 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-list-container .productcard {
+    flex-basis: 33.333%;
+  }
+}
+
+@media (min-width: 992px) {
+  .product-list-container .productcard {
+    flex-basis: 25%;
+  }
+}
+
+/* JS ile oluşturulan kartların içindeki resimlerin taşmasını engelle */
+.productcardphoto img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Step 2'deki özel radio buton görünümü için */
+.shipping-option-card {
+  cursor: pointer;
+  border: 1px solid #dee2e6;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.shipping-option-card:hover {
+  border-color: #0d6efd;
+}
+
+/* Seçili kartı vurgula */
+.shipping-option-card.selected {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Adres listesindeki (Step 1) özel radio görünümü */
+.address-card {
+  border: 1px solid #dee2e6;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.address-card.selected {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}

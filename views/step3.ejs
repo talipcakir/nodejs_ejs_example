@@ -1,0 +1,197 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<div class="container py-5">
+    <div class="row g-3 text-center">
+        <div class="col-4">
+            <div class="text-muted">
+                <img src="/photo/Location1.png" alt="Address">
+                <p class="mb-0 small">Step 1</p>
+                <p class="fs-5 mb-0">Address</p>
+            </div>
+        </div>
+        <div class="col-4">
+             <div class="text-muted">
+                <img src="/photo/Shipping.png" alt="Shipping">
+                <p class="mb-0 small">Step 2</p>
+                <p class="fs-5 mb-0">Shipping</p>
+            </div>
+        </div>
+        <div class="col-4">
+             <div class="text-primary">
+                <img src="/photo/Payment1.png" alt="Payment">
+                <p class="mb-0 small">Step 3</p>
+                <p class="fs-5 mb-0">Payment</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="container mb-5">
+    <div class="row g-5">
+        
+        <div class="col-lg-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+                    <h3 class_ ="mb-4">Payment</h3>
+
+                    <ul class="nav nav-tabs mb-4" id="paymentTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="credit-card-tab" data-bs-toggle="tab" data-bs-target="#credit-card" type="button" role="tab" aria-controls="credit-card" aria-selected="true">Credit Card</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="paypal-tab" data-bs-toggle="tab" data-bs-target="#paypal" type="button" role="tab" aria-controls="paypal" aria-selected="false">Paypal</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="paymentTabsContent">
+                        
+                        <div class="tab-pane fade show active" id="credit-card" role="tabpanel" aria-labelledby="credit-card-tab">
+                            <div class="text-center mb-4">
+                                <img src="/photo/Credit Card.png" alt="Credit Card" class="img-fluid">
+                            </div>
+                            <form class="row g-3">
+                                <div class="col-12">
+                                    <label for="cardHolderName" class="form-label">Cardholder Name</label>
+                                    <input type="text" class="form-control form-control-lg" id="cardHolderName" placeholder="Cardholder Name">
+                                </div>
+                                <div class="col-12">
+                                    <label for="cardNumber" class="form-label">Card Number</label>
+                                    <input type="text" class="form-control form-control-lg" id="cardNumber" placeholder="Card Number">
+                                </div>
+                                <div class="col-6">
+                                    <label for="cardExpDate" class="form-label">Exp Date</label>
+                                    <input type="text" class="form-control form-control-lg" id="cardExpDate" placeholder="MM/YY">
+                                </div>
+                                <div class="col-6">
+                                    <label for="cardCvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control form-control-lg" id="cardCvv" placeholder="CVV">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade" id="paypal" role="tabpanel" aria-labelledby="paypal-tab">
+                            <p class="text-center p-5">Paypal ile ödeme yapmak için yönlendirileceksiniz.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <aside class="col-lg-5">
+             <div class="card shadow-sm border-0 sticky-top" style="top: 100px;">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-4">Summary</h4>
+
+                    <div id="step3SummaryList" class="mb-3" style="max-height: 250px; overflow-y: auto;">
+                        </div>
+
+                    <hr>
+
+                    <div class="mb-3">
+                        <h6 class="text-muted">Address</h6>
+                        <p id="summaryAddress">Adres bilgisi yükleniyor...</p>
+                        
+                        <h6 class="text-muted">Shipment method</h6>
+                        <p id="summaryShippingMethod" class="mb-0">Gönderim bilgisi yükleniyor...</p>
+                    </div>
+
+                    <hr>
+
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            Subtotal
+                            <span id="step3Subtotal">$0.00</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 text-muted">
+                            Estimated Tax (2%)
+                            <span id="step3Tax">$0.00</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 text-muted">
+                            Estimated shipping & Handling
+                            <span id="step3Shipping">$0.00</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 fw-bold fs-5">
+                            Total
+                            <span id="step3Total">$0.00</span>
+                        </li>
+                    </ul>
+
+                </div>
+             </div>
+        </aside>
+
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-lg-7">
+            <div class="d-flex justify-content-between">
+                <a href="/step2" class="btn btn-outline-secondary btn-lg" style="min-width: 120px;">Back</a>
+                <button class="btn btn-dark btn-lg" style="min-width: 120px;">Pay Now</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script>
+// Step3.html'den alınan orijinal scriptler (Birleştirildi)
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Gönderim ve Adres Bilgilerini Yükle
+    const selectedShipping = JSON.parse(localStorage.getItem('selectedShipping')) || {};
+    const selectedAddress = JSON.parse(localStorage.getItem('selectedAddress')) || {};
+
+    const shippingEl = document.getElementById('summaryShippingMethod');
+    const addressEl = document.getElementById('summaryAddress');
+    
+    if (shippingEl) {
+        shippingEl.textContent = `${selectedShipping.type} - ${selectedShipping.desc} (${selectedShipping.date || 'N/A'})`;
+    }
+    if (addressEl) {
+        addressEl.textContent = selectedAddress.address || 'Adres seçilmedi.';
+    }
+
+    // 2. Sepet Özeti ve Fiyatları Yükle
+    const cart = JSON.parse(localStorage.getItem('cart')) || {};
+    const summaryList = document.getElementById('step3SummaryList');
+    
+    let subtotal = 0;
+    
+    if (summaryList) {
+        if (Object.keys(cart).length === 0) {
+            summaryList.innerHTML = "<p class='text-muted'>Sepetiniz boş.</p>";
+        } else {
+            summaryList.innerHTML = ''; // Temizle
+            Object.keys(cart).forEach(productId => {
+                const item = cart[productId];
+                subtotal += item.price * item.quantity;
+
+                // Her bir ürün için özet kartı
+                summaryList.innerHTML += `
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="${item.image || '/photo/ProductImage.png'}" alt="${item.title}" class="img-fluid rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                        <div class="flex-grow-1 text-truncate">
+                            <small class="d-block text-truncate">${item.title} (x${item.quantity})</small>
+                            <strong>$${(item.price * item.quantity).toFixed(2)}</strong>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    }
+
+    // 3. Fiyat Toplamlarını Hesapla ve Göster
+    const shippingPrice = selectedShipping.price || 0; // Step 2'den gelen fiyat
+    const tax = subtotal * 0.02; // %2 vergi
+    const total = subtotal + tax + shippingPrice;
+
+    document.getElementById('step3Subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('step3Tax').textContent = `$${tax.toFixed(2)}`;
+    document.getElementById('step3Shipping').textContent = `$${shippingPrice.toFixed(2)}`;
+    document.getElementById('step3Total').textContent = `$${total.toFixed(2)}`;
+});
+</script>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
+    <div class="container-fluid mx-lg-5">
+        
+        <a class="navbar-brand" href="/">
+            <img src="/photo/logo.svg" alt="Logo" style="width: 65px; height: 22px;">
+        </a>
+
+        <div class="d-lg-none ms-auto me-2">
+            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#mobileSearch" aria-controls="mobileSearch" aria-expanded="false" aria-label="Toggle search">
+                <img src="/photo/Search.png" alt="Search" style="width: 24px; height: 24px;">
+            </button>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarCollapse" aria-controls="mainNavbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="/photo/Burger.png" alt="Menu" style="width: 40px; height: 40px;">
+        </button>
+
+        <div class="collapse navbar-collapse" id="desktopSearch">
+            <form class="input-group d-none d-lg-flex mx-auto" style="max-width: 372px;">
+                <span class="input-group-text bg-light border-end-0">
+                    <img src="/photo/Search.png" alt="" style="width: 24px; height: 24px;">
+                </span>
+                <input type="text" class="form-control bg-light border-start-0" placeholder="Search" style="background-color: #F5F5F5 !important;">
+            </form>
+        </div>
+
+        <div class="collapse navbar-collapse" id="mainNavbarCollapse">
+            
+            <ul class="navbar-nav d-none d-lg-flex" style="position: absolute; left: 50%; transform: translateX(-50%);">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="/cart">Shopping Cart</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Checkout
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/step1">Step 1: Address</a></li>
+                        <li><a class="dropdown-item" href="/step2">Step 2: Shipping</a></li>
+                        <li><a class="dropdown-item" href="/step3">Step 3: Payment</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="navbar-nav d-none d-lg-flex ms-auto align-items-center gap-3">
+                <a href="#" class="nav-link"><img src="/photo/Favorites.png" alt="Favorites"></a>
+                <a href="/cart" class="nav-link"><img src="/photo/Cart.png" alt="Cart"></a>
+                <a href="#" class="nav-link"><img src="/photo/User.png" alt="User"></a>
+            </div>
+
+            <ul class="navbar-nav d-lg-none mt-3">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="/cart">Shopping Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="/step1">Checkout Step 1</a></li>
+                <li class="nav-item"><a class="nav-link" href="/step2">Checkout Step 2</a></li>
+                <li class="nav-item"><a class="nav-link" href="/step3">Checkout Step 3</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Favorites</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="collapse w-100 d-lg-none" id="mobileSearch">
+        <div class="p-3">
+            <form class="input-group">
+                <span class="input-group-text bg-light border-end-0">
+                    <img src="/photo/Search.png" alt="" style="width: 24px; height: 24px;">
+                </span>
+                <input type="text" class="form-control bg-light border-start-0" placeholder="Search" style="background-color: #F5F5F5 !important;">
+            </form>
+        </div>
+    </div>
+</nav>

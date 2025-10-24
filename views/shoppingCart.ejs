@@ -1,0 +1,206 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<main class="container my-5">
+    <div class="row g-5">
+
+        <div class="col-lg-8">
+            <h1 class="mb-4">Shopping Cart</h1>
+            <div class="shoppingcardlist bg-white p-3 p-md-4 rounded shadow-sm">
+                <p class="placeholder-glow"><span class="placeholder col-12"></span></p>
+            </div>
+        </div>
+
+        <aside class="col-lg-4">
+            <div class="card shadow-sm border-0 sticky-top" style="top: 100px;">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-4">Order Summary</h4>
+                    
+                    <div class="mb-3">
+                        <label for="discountCode" class="form-label small text-muted">Discount code / Promo code</label>
+                        <input type="text" id="discountCode" class="form-control" placeholder="Code">
+                    </div>
+                    <div class="mb-3">
+                        <label for="bonusCard" class="form-label small text-muted">Your bonus card number</label>
+                        <div class="input-group">
+                            <input type="text" id="bonusCard" class="form-control" placeholder="Enter Card Number">
+                            <button class="btn btn-outline-secondary" type="button">Apply</button>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            Subtotal
+                            <span id="subtotal">$0.00</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 text-muted">
+                            Estimated Tax (2%)
+                            <span id="tax">$0.00</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 text-muted">
+                            Estimated shipping & Handling
+                            <span id="shipping">$0.00</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 fw-bold fs-5">
+                            Total
+                            <span id="total">$0.00</span>
+                        </li>
+                    </ul>
+
+                    <a href="/step1" class="btn btn-dark btn-lg w-100">Checkout</a>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+</main>
+
+<script>
+// ShoppingCart.html'den alınan orijinal script (Bootstrap ile güncellendi)
+document.addEventListener('DOMContentLoaded', () => {
+    const cart = JSON.parse(localStorage.getItem('cart')) || {};
+    const shoppingCardList = document.querySelector('.shoppingcardlist');
+    shoppingCardList.innerHTML = ''; // Placeholder'ı temizle
+
+    if (Object.keys(cart).length === 0) {
+        shoppingCardList.innerHTML = "<p class='text-center text-muted'>Sepetiniz boş.</p>";
+        updateCartTotals(cart); // Toplamları sıfırla
+        return;
+    }
+
+    function updateCartTotals(cart) {
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        let subtotal = 0;
+        for (const productId in cart) {
+            subtotal += cart[productId].price * cart[productId].quantity;
+        }
+
+        const tax = subtotal * 0.02; // %2 vergi
+        const shipping = subtotal > 0 ? 29.00 : 0; // Sabit kargo ücreti
+        const total = subtotal + tax + shipping;
+
+        document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+        document.getElementById('shipping').textContent = `$${shipping.toFixed(2)}`;
+        document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+
+        if (Object.keys(cart).length === 0) {
+            shoppingCardList.innerHTML = "<p class='text-center text-muted'>Sepetiniz boş.</p>";
+        }
+    }
+
+    Object.keys(cart).forEach((productId, index) => {
+        const item = cart[productId];
+
+        // Ürün kartı ana sarmalayıcısı
+        const shoppingCard = document.createElement('div');
+        shoppingCard.className = 'shopping-cart-item py-3';
+        
+        // Separatör ekle (ilk eleman hariç)
+        if (index > 0) {
+            shoppingCard.classList.add('border-top');
+        }
+
+        const row = document.createElement('div');
+        row.className = 'row g-3 align-items-center';
+
+        // Sütun 1: Resim
+        const colImg = document.createElement('div');
+        colImg.className = 'col-3 col-md-2';
+        colImg.innerHTML = `<img src="${item.image || '/photo/ProductImage.png'}" alt="${item.title}" class="img-fluid rounded">`;
+
+        // Sütun 2: Bilgi ve Butonlar
+        const colContent = document.createElement('div');
+        colContent.className = 'col-9 col-md-10';
+
+        // Üst Kısım: İsim ve Fiyat
+        const contentTop = document.createElement('div');
+        contentTop.className = 'd-flex justify-content-between align-items-start mb-2';
+        contentTop.innerHTML = `
+            <div>
+                <strong class="d-block text-truncate" style="max-width: 250px;">${item.title}</strong>
+                <small class="text-muted">#${productId}</small>
+            </div>
+            <strong class="fs-5 ms-3 price-display">$${(item.price * item.quantity).toFixed(2)}</strong>
+        `;
+
+        // Alt Kısım: +/- Butonları ve Sil
+        const contentBottom = document.createElement('div');
+        contentBottom.className = 'd-flex justify-content-between align-items-center';
+        
+        // Miktar değiştirici
+        const quantityControl = document.createElement('div');
+        quantityControl.className = 'input-group input-group-sm'
+        quantityControl.style.maxWidth = '120px';
+        
+        const btnMinus = document.createElement('button');
+        btnMinus.className = 'btn btn-outline-secondary';
+        btnMinus.type = 'button';
+        btnMinus.innerHTML = '&ndash;';
+        
+        const quantityInput = document.createElement('input');
+        quantityInput.type = 'text';
+        quantityInput.className = 'form-control text-center';
+        quantityInput.value = item.quantity;
+        quantityInput.readOnly = true;
+
+        const btnPlus = document.createElement('button');
+        btnPlus.className = 'btn btn-outline-secondary';
+        btnPlus.type = 'button';
+        btnPlus.innerHTML = '+';
+
+        quantityControl.appendChild(btnMinus);
+        quantityControl.appendChild(quantityInput);
+        quantityControl.appendChild(btnPlus);
+
+        // Sil Butonu
+        const btnRemove = document.createElement('button');
+        btnRemove.className = 'btn btn-sm btn-outline-danger ms-3';
+        btnRemove.innerHTML = '<i class="bi bi-trash"></i> <span class="d-none d-md-inline">Remove</span>';
+
+        // Olay Dinleyiciler
+        btnMinus.addEventListener('click', () => {
+            if (item.quantity > 1) {
+                cart[productId].quantity -= 1;
+            } else {
+                delete cart[productId]; // 1'den azsa sil
+            }
+            quantityInput.value = cart[productId]?.quantity || 0; // Güncelle
+            contentTop.querySelector('.price-display').textContent = `$${(item.price * (cart[productId]?.quantity || 0)).toFixed(2)}`;
+            if (!cart[productId]) shoppingCard.remove(); // DOM'dan kaldır
+            updateCartTotals(cart);
+        });
+
+        btnPlus.addEventListener('click', () => {
+            cart[productId].quantity += 1;
+            quantityInput.value = cart[productId].quantity;
+            contentTop.querySelector('.price-display').textContent = `$${(item.price * item.quantity).toFixed(2)}`;
+            updateCartTotals(cart);
+        });
+
+        btnRemove.addEventListener('click', () => {
+            delete cart[productId];
+            shoppingCard.remove();
+            updateCartTotals(cart);
+        });
+
+        // DOM'a ekleme
+        contentBottom.appendChild(quantityControl);
+        contentBottom.appendChild(btnRemove);
+        colContent.appendChild(contentTop);
+        colContent.appendChild(contentBottom);
+        row.appendChild(colImg);
+        row.appendChild(colContent);
+        shoppingCard.appendChild(row);
+        shoppingCardList.appendChild(shoppingCard);
+    });
+
+    // Başlangıç toplamlarını hesapla
+    updateCartTotals(cart);
+});
+</script>
+
+<%- include('partials/footer') %>

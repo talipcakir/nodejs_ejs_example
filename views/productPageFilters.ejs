@@ -1,0 +1,103 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<main class="container my-5">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="d-flex align-items-center mb-4">
+                <a href="/products" class="btn btn-light me-3"><i class="bi bi-arrow-left"></i></a>
+                <h1 class="mb-0">Filters</h1>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="accordion" id="filterAccordionPage">
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingPrice">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrice" aria-expanded="true" aria-controls="collapsePrice">
+                                    Price
+                                </button>
+                            </h2>
+                            <div id="collapsePrice" class="accordion-collapse collapse show" aria-labelledby="headingPrice">
+                                <div class="accordion-body">
+                                    <input type="range" class="form-range" min="0" max="2000" step="10" id="priceRange">
+                                    <div class="d-flex justify-content-between text-muted small mt-2">
+                                        <span>$0</span>
+                                        <span>$2000</span>
+                                    </div>
+                                    <div class="row g-2 mt-2">
+                                        <div class="col">
+                                            <input type="number" class="form-control" placeholder="From" value="1299">
+                                        </div>
+                                        <div class="col">
+                                            <input type="number" class="form-control" placeholder="To" value="1299">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingBrand">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBrand" aria-expanded="false" aria-controls="collapseBrand">
+                                    Brand
+                                </button>
+                            </h2>
+                            <div id="collapseBrand" class="accordion-collapse collapse" aria-labelledby="headingBrand">
+                                <div class="accordion-body">
+                                    <input type="search" class="form-control form-control-sm mb-3" placeholder="Search">
+                                    <div class="list-group list-group-flush" style="max-height: 250px; overflow-y: auto;">
+                                        <label class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div><input class="form-check-input me-2" type="checkbox" value="" checked> Apple</div>
+                                            <span class="badge bg-light text-dark rounded-pill">110</span>
+                                        </label>
+                                        <label class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div><input class="form-check-input me-2" type="checkbox" value=""> Samsung</div>
+                                            <span class="badge bg-light text-dark rounded-pill">125</span>
+                                        </label>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingMemory">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMemory" aria-expanded="false" aria-controls="collapseMemory">
+                                    Memory
+                                </button>
+                            </h2>
+                            <div id="collapseMemory" class="accordion-collapse collapse" aria-labelledby="headingMemory">
+                                <div class="accordion-body">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div><input class="form-check-input me-2" type="checkbox" value=""> 16GB</div>
+                                            <span class="badge bg-light text-dark rounded-pill">65</span>
+                                        </label>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingProtection">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProtection" aria-expanded="false" aria-controls="collapseProtection">
+                                    Protection class
+                                </button>
+                            </h2>
+                            <div id="collapseProtection" class="accordion-collapse collapse" aria-labelledby="headingProtection">
+                                <div class="accordion-body">...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid mt-4">
+                        <button class="btn btn-dark btn-lg">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

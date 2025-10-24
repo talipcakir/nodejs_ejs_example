@@ -1,0 +1,115 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<div class="container py-5">
+    <div class="row g-3 text-center">
+        <div class="col-4">
+            <div class="text-muted">
+                <img src="/photo/Location1.png" alt="Address">
+                <p class="mb-0 small">Step 1</p>
+                <p class="fs-5 mb-0">Address</p>
+            </div>
+        </div>
+        <div class="col-4">
+             <div class="text-primary">
+                <img src="/photo/Shipping1.png" alt="Shipping">
+                <p class="mb-0 small">Step 2</p>
+                <p class="fs-5 mb-0">Shipping</p>
+            </div>
+        </div>
+        <div class="col-4">
+             <div class="text-muted">
+                <img src="/photo/Payment.png" alt="Payment">
+                <p class="mb-0 small">Step 3</p>
+                <p class="fs-5 mb-0">Payment</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+                    <h3 class="mb-4">Select Shipping Method</h3>
+
+                    <div class="shippingpaymentmethod d-grid gap-3 mb-4">
+                        
+                        <div class="card p-3 shipping-option-card" data-value='{"type": "Free", "desc": "Regular shipment", "date": "17 Oct, 2023", "price": 0.00}'>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong class="d-block">Free - Regular shipment</strong>
+                                    <small class="text-muted">Get your delivery as soon as possible</small>
+                                </div>
+                                <span class="fw-bold ms-3 text-nowrap">17 Oct, 2023</span>
+                            </div>
+                        </div>
+
+                        <div class="card p-3 shipping-option-card" data-value='{"type": "$8.50", "desc": "Fast delivery", "date": "1 Oct, 2023", "price": 8.50}'>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong class="d-block">$8.50 - Fast delivery</strong>
+                                    <small class="text-muted">Get your delivery as soon as possible</small>
+                                </div>
+                                <span class="fw-bold ms-3 text-nowrap">1 Oct, 2023</span>
+                            </div>
+                        </div>
+
+                        <div class="card p-3 shipping-option-card" data-value='{"type": "Schedule", "desc": "Pick a date", "date": "Select Date", "price": 15.00}'>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong class="d-block">Schedule - Pick a date</strong>
+                                    <small class="text-muted">Pick a date when you want to get your delivery</small>
+                                </div>
+                                <span class="fw-bold ms-3 text-nowrap text-primary">Select Date</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-5">
+                        <a href="/step1" class="btn btn-outline-secondary btn-lg" style="min-width: 120px;">Back</a>
+                        <button id="step2Next" class="btn btn-dark btn-lg" style="min-width: 120px;">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+// Step2.html'den alınan orijinal script (Bootstrap ile güncellendi)
+document.addEventListener('DOMContentLoaded', () => {
+    const shippingCards = document.querySelectorAll('.shipping-option-card');
+    const nextBtn = document.getElementById('step2Next');
+
+    let selectedData = null;
+
+    shippingCards.forEach(card => {
+        card.addEventListener('click', () => {
+            // Tüm kartlardan 'selected' sınıfını kaldır
+            shippingCards.forEach(c => c.classList.remove('selected'));
+            // Bu karta 'selected' sınıfı ekle
+            card.classList.add('selected');
+            
+            // JSON verisini data-value'dan al
+            selectedData = JSON.parse(card.dataset.value);
+            
+            // Seçimi localStorage'a kaydet
+            localStorage.setItem('selectedShipping', JSON.stringify(selectedData));
+        });
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (!selectedData) {
+            alert('Lütfen bir gönderim methodu seçin!');
+            return;
+        }
+        // Step 3'e yönlendir
+        window.location.href = '/step3';
+    });
+});
+</script>
+
+<%- include('partials/footer') %>

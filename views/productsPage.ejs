@@ -106,8 +106,29 @@
                 </div>
             </div>
 
-            <div class="row g-3 product-list-container" id="productsearchpage">
+<div class="row g-3 product-list-container" id="productsearchpage">
+    <% if (typeof products !== 'undefined' && products.length > 0) { %>
+        <% products.forEach(product => { %>
+            <div class="col-6 col-md-4">
+                <div class="card h-100 text-center border-0 productcard">
+                    <div class="card-header bg-transparent border-0 text-end productcardtop">
+                        <img src="/photo/Like.png" alt="Like" style="width:32px; height:32px; cursor:pointer;">
+                    </div>
+                    <div class="productcardphoto d-flex align-items-center justify-content-center" style="height: 160px;">
+                        <img src="<%= product.image %>" alt="<%= product.title %>" class="card-img-top img-fluid" style="max-height: 100%; width: auto; max-width: 100%;">
+                    </div>
+                    <div class="card-body d-flex flex-column productcarddescription">
+                        <h4 class="card-title fs-6 text-truncate" style="min-height: 48px;"><%= product.title %></h4>
+                        <p class="card-text fs-4 fw-bold my-3">$<%= product.price %></p>
+                        <a href="/product/<%= product.id %>" class="btn btn-dark w-100 mt-auto buybutton">Buy Now</a>
+                    </div>
                 </div>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <p class="text-muted">Ürün bulunamadı.</p>
+    <% } %>
+</div>
 
             <nav aria-label="Page navigation" class="mt-5 d-flex justify-content-center">
                  <img src="/photo/Pagination.png" class="img-fluid" alt="Pagination controls">
@@ -153,55 +174,5 @@
         <button class="btn btn-dark w-100 mt-3">Apply</button>
     </div>
 </div>
-
-<script>
-    // ProductsPage.html'den alınan orijinal script
-    document.addEventListener("DOMContentLoaded", () => {
-        function loadProducts(limit, containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            fetch("https://fakestoreapi.com/products")
-                .then(response => response.json())
-                .then(data => {
-                    data.slice(0, limit).forEach(product => {
-                        const cardWrapper = document.createElement("div");
-                        // Kartların Bootstrap grid'ine uyması için sarmalayıcıya col sınıfları ekliyoruz
-                        // Bu sayfada 3'lü grid (lg-4) daha iyi durabilir
-                        cardWrapper.className = "col-6 col-md-4"; // 2'li (mobil), 3'lü (tablet+)
-
-                        const card = document.createElement("div");
-                        card.className = "card h-100 text-center border-0 productcard";
-
-                        card.innerHTML = `
-                            <div class="card-header bg-transparent border-0 text-end productcardtop">
-                                <img src="/photo/Like.png" alt="Like" style="width:32px; height:32px; cursor:pointer;">
-                            </div>
-                            <div class="productcardphoto d-flex align-items-center justify-content-center" style="height: 160px;">
-                                <img src="${product.image}" alt="${product.title}" class="card-img-top img-fluid" style="max-height: 100%; width: auto; max-width: 100%;">
-                            </div>
-                            <div class="card-body d-flex flex-column productcarddescription">
-                                <h4 class="card-title fs-6 text-truncate" style="min-height: 48px;">${product.title}</h4>
-                                <p class="card-text fs-4 fw-bold my-3">$${product.price}</p>
-                                <button class="btn btn-dark w-100 mt-auto buybutton">Buy Now</button>
-                            </div>
-                        `;
-                        
-                        cardWrapper.appendChild(card);
-                        container.appendChild(cardWrapper);
-
-                        const buyBtn = card.querySelector(".buybutton");
-                        buyBtn.addEventListener("click", () => {
-                             // server.js'deki route'a yönlendiriyoruz
-                            window.location.href = `/product/${product.id}`;
-                        });
-                    });
-                })
-                .catch(err => console.error("Ürünler yüklenirken hata oluştu:", err));
-        }
-
-        loadProducts(9, "productsearchpage");
-    });
-</script>
 
 <%- include('partials/footer') %>

@@ -105,15 +105,34 @@
         </div>
     </div>
 
-    <div class="container my-5">
-        <div class="nav nav-tabs border-bottom-0 mb-4">
-            <button class="nav-link active" data-bs-toggle="tab">New Arrival</button>
-            <button class="nav-link" data-bs-toggle="tab">Bestseller</button>
-            <button class="nav-link" data-bs-toggle="tab">Featured Products</button>
+<div class="container my-5">
+    <div class="nav nav-tabs border-bottom-0 mb-4">
         </div>
-        <div class="row g-3 product-list-container" id="productsection">
-            </div>
+    
+    <div class="row g-3 product-list-container" id="productsection">
+        <% if (typeof products !== 'undefined' && products.length > 0) { %>
+            <% products.forEach(product => { %>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 text-center border-0 productcard">
+                        <div class="card-header bg-transparent border-0 text-end productcardtop">
+                            <img src="/photo/Like.png" alt="Like" style="width:32px; height:32px; cursor:pointer;">
+                        </div>
+                        <div class="productcardphoto d-flex align-items-center justify-content-center" style="height: 160px;">
+                            <img src="<%= product.image %>" alt="<%= product.title %>" class="card-img-top img-fluid" style="max-height: 100%; width: auto; max-width: 100%;">
+                        </div>
+                        <div class="card-body d-flex flex-column productcarddescription">
+                            <h4 class="card-title fs-6 text-truncate" style="min-height: 48px;"><%= product.title %></h4>
+                            <p class="card-text fs-4 fw-bold my-3">$<%= product.price %></p>
+                            <a href="/product/<%= product.id %>" class="btn btn-dark w-100 mt-auto buybutton">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p class="text-muted">Ürün bulunamadı.</p>
+        <% } %>
     </div>
+</div>
 
     <div id="productCarousel" class="carousel slide my-5" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -190,11 +209,32 @@
         </button>
     </div>
 
-    <div class="container my-5">
-        <h2 class="fs-1 mb-4">Discounts up to -50%</h2>
-        <div class="row g-3 product-list-container" id="discount">
-            </div>
+<div class="container my-5">
+    <h2 class="fs-1 mb-4">Discounts up to -50%</h2>
+    <div class="row g-3 product-list-container" id="discount">
+        <% if (typeof discountProducts !== 'undefined' && discountProducts.length > 0) { %>
+            <% discountProducts.forEach(product => { %>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 text-center border-0 productcard">
+                        <div class="card-header bg-transparent border-0 text-end productcardtop">
+                            <img src="/photo/Like.png" alt="Like" style="width:32px; height:32px; cursor:pointer;">
+                        </div>
+                        <div class="productcardphoto d-flex align-items-center justify-content-center" style="height: 160px;">
+                            <img src="<%= product.image %>" alt="<%= product.title %>" class="card-img-top img-fluid" style="max-height: 100%; width: auto; max-width: 100%;">
+                        </div>
+                        <div class="card-body d-flex flex-column productcarddescription">
+                            <h4 class="card-title fs-6 text-truncate" style="min-height: 48px;"><%= product.title %></h4>
+                            <p class="card-text fs-4 fw-bold my-3">$<%= product.price %></p>
+                            <a href="/product/<%= product.id %>" class="btn btn-dark w-100 mt-auto buybutton">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p class="text-muted">Ürün bulunamadı.</p>
+        <% } %>
     </div>
+</div>
 
     <div class="container-fluid bg-dark text-white text-center p-5 my-5">
         <div class="p-5">
@@ -204,55 +244,5 @@
         </div>
     </div>
 </main>
-
-<script>
-    // Home.html'den alınan orijinal script
-    document.addEventListener("DOMContentLoaded", () => {
-
-        function loadProducts(limit, containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return; // Konteyner yoksa çık
-            
-            fetch("https://fakestoreapi.com/products")
-                .then(response => response.json())
-                .then(data => {
-                    data.slice(0, limit).forEach(product => {
-                        const cardWrapper = document.createElement("div");
-                        // Kartların Bootstrap grid'ine uyması için sarmalayıcıya col sınıfları ekliyoruz
-                        cardWrapper.className = "col-6 col-md-4 col-lg-3"; 
-
-                        const card = document.createElement("div");
-                        card.className = "card h-100 text-center border-0 productcard"; // .productcard korundu
-
-                        card.innerHTML = `
-                            <div class="card-header bg-transparent border-0 text-end productcardtop">
-                                <img src="/photo/Like.png" alt="Like" style="width:32px; height:32px; cursor:pointer;">
-                            </div>
-                            <div class="productcardphoto d-flex align-items-center justify-content-center" style="height: 160px;">
-                                <img src="${product.image}" alt="${product.title}" class="card-img-top img-fluid" style="max-height: 100%; width: auto; max-width: 100%;">
-                            </div>
-                            <div class="card-body d-flex flex-column productcarddescription">
-                                <h4 class="card-title fs-6 text-truncate" style="min-height: 48px;">${product.title}</h4>
-                                <p class="card-text fs-4 fw-bold my-3">$${product.price}</p>
-                                <button class="btn btn-dark w-100 mt-auto buybutton">Buy Now</button>
-                            </div>
-                        `;
-                        
-                        cardWrapper.appendChild(card);
-                        container.appendChild(cardWrapper);
-
-                        const buyBtn = card.querySelector(".buybutton");
-                        buyBtn.addEventListener("click", () => {
-                            // server.js'deki route'a yönlendiriyoruz
-                            window.location.href = `/product/${product.id}`;
-                        });
-                    });
-                })
-                .catch(err => console.error("Ürünler yüklenirken hata oluştu:", err));
-        }
-        loadProducts(8, "productsection");
-        loadProducts(4, "discount");
-    });
-</script>
 
 <%- include('partials/footer') %>
